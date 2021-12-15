@@ -12,7 +12,17 @@ $resultCollection = mysqli_query($connection, $queryCollection);
 $collect = mysqli_fetch_assoc($resultCollection);
 
 $queryImages = "SELECT * from images WHERE product_id=$id";
-$resultImages = mysqli_query($connection, $queryProduct);
+$resultImages = mysqli_query($connection, $queryImages);
+$images=[];
+while ($image=mysqli_fetch_assoc($resultImages)){
+    array_push($images,$image['path']);
+}
+$countImage= count($images);
+$currenImage=$_GET['image']||0;
+$prevImage=($currenImage==0)?($countImage-1):($currenImage-1);
+$nextImage=($currenImage==($countImage-1))?0:($currenImage+1);
+
+
 
 ?>
 
@@ -30,11 +40,12 @@ $resultImages = mysqli_query($connection, $queryProduct);
         <section class="product">
             <!-- Большая картинка и их смена пока не сделана - не подготовлены картинки-->
             <div class="product__picture">
-                <div class="product__page">&lt;</div>
+<!--                <div class="product__page">&lt;</div>-->
+                <a href="product.php?productId=<?=$id?>&image=<?=$prevImage?>" class="product__page">&lt;</a>
                 <div class="product__image">
-                    <img src="img/single.jpg" alt="">
+                    <img src="img/big/<?=$images[$currenImage]?>" alt="">
                 </div>
-                <div class="product__page">&gt;</div>
+                <a href="product.php?productId=<?=$id?>&image=<?=$nextImage?>" class="product__page">&gt;</a>
             </div>
             <div class="product__white-box">
                 <div class="container"></div>
@@ -46,9 +57,16 @@ $resultImages = mysqli_query($connection, $queryProduct);
                     <div class="product__description">
                         <div class="product__collection"><?=$collect['collection_name']?> collection <?=$collect['category_name']?></div>
                         <div class="product__3line">
-                            <div class="product__3line-part"></div>
-                            <div class="product__3line-part product__3line-part_active"></div>
-                            <div class="product__3line-part"></div>
+                            <?php
+                            for($index=0;$index<$countImage;$index++) {
+                                $result="<div class='product__3line-part";
+                                if($index==$currenImage) $result.= " product__3line-part_active";
+                                echo    $result."'></div>";
+                            }
+                            ?>
+
+<!--                            <div class="product__3line-part product__3line-part_active"></div>-->
+<!--                            <div class="product__3line-part"></div>-->
                         </div>
                         <h2 class="product__caption"><?=$product["name"] ?></h2>
                         <p class="product__text"><?=$product["description"]?></p>

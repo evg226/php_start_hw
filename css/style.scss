@@ -827,13 +827,14 @@ body {
 
   &__3line {
     display: flex;
-    width: 180px;
+    //width: 180px;
     height: 2px;
     justify-content: space-between;
     margin: 12px 0;
 
     &-part {
-      width: 30%;
+      width: 50px;
+      margin:0 3px;
       height: 100%;
       background: rgba(42, 42, 42, 0.15);
 
