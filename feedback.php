@@ -1,3 +1,9 @@
+<?php
+$name=$_GET['name'];
+$email=$_GET['email'];
+$id=$_GET['id'];
+$feedtext=$_GET['feedtext'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <?php require_once "Components/head.php" ?>
@@ -9,33 +15,46 @@
 
 <main>
     <section class="feedback container">
-        <form class="feedback__container" action="#" method="post">
-            <h2 class="signup__desc signup__desc_header">You can send your feedback here</h2>
-                <div class="signup__header">Your name</div>
-                <input class="signup__input" type="text" name="userName"placeholder="Your Name">
-                <div class="signup__header">Your email</div>
-                <input class="signup__input" type="email" name="email" placeholder="E-mail">
-                <div class="signup__text">Please type your email if you want</div>
-            <div class="signup__header">Your message</div>
-                <textarea class="signup__input" rows="10"  name="message" type="text" placeholder="Message"></textarea>
-                <button class="signup__button">Join now</button>
+        <div class="feedback__container">
+            <h2 class="signup__desc signup__desc_header">Feedback list</h2>
             <?php
             require "connect.php";
-            $userName = (string)htmlspecialchars(strip_tags($_POST['userName']));
-            if(!$userName) $userName="noName";
-            $email = (string)htmlspecialchars(strip_tags($_POST['email']));
-            $message = (string)htmlspecialchars(strip_tags($_POST['message']));
-            if ($message) {
-                $query = "INSERT INTO feedbacks (name,email,feedtext,feeddate) VALUES ('$userName','$email','$message',NOW())";
-                mysqli_query($connection, $query);
-                $feedId = mysqli_insert_id($connection);
-                $result = $feedId ? 'Данные отправлены' : 'Ошибка. Попробуйте заново';
-                echo "<div class='signup__header'>$result</div>";
-            }
+            $query = "Select * FROM feedbacks";
+            $feedbacks = mysqli_query($connection, $query);
+            while ($data=mysqli_fetch_assoc($feedbacks)):?>
+                <div class='feedback__message'>
+                    <div class='feedback__user'>User: <?=$data['name']?></div>
+                    <div class='feedback__text'><?=$data['feedtext']?></div>
+                    <div class="feedback__buttons">   
+                        <a class="feedback_button" href="?action=update&id=<?=$data['id']?>&name=<?=$data['name']?>&email=<?=$data['email']?>&feedtext=<?=$data['feedtext']?>#updform" class='feedback__delete'>update</a>
+                        <a class="feedback_button" href="dofeedbackaction.php?action=delete&id=<?=$data['id']?>" class='feedback__delete'>delete</a>
+                        <div class='feedback__date'><?=$data['feeddate']?></div>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        </div>
 
-            ?>
+        <form id="updform" class="feedback__container" action="dofeedbackaction.php" method="post">
+            <h2 class="signup__desc signup__desc_header">You can send your feedback here</h2>
+                <input hidden type="text" name="id" placeholder="Your Name" value="<?=$_GET['id']?>">
+                <div class="signup__header">Your name</div>
+                <input class="signup__input" type="text" name="userName"placeholder="Your Name" value="<?=$name?>">
+                <div class="signup__header">Your email</div>
+                <input class="signup__input" type="email" name="email" placeholder="E-mail" value="<?=$email?>">
+                <div class="signup__text">Please type your email if you want</div>
+            <div class="signup__header">Your message</div>
+                <textarea class="signup__input" rows="10"  name="message" type="text" placeholder="Message"><?=$feedtext?></textarea>
+                <?php
+                    if($_GET['action']=="update") {
+                      echo "<div class='feedback__form_buttons'><button type='submit' name='update' class='signup__button'>update</button>";
+                      echo "<a class='feedback__clearform' href='?action=' >Clear form</a></div>";
+                    }else {
+                        echo "<button type='submit' name='create' class='signup__button'>CREATE</button>";
+                    }
+                ?>
+`       </form>
 
-                </form>
+
     </section>
 </main>
 

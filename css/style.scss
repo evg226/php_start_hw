@@ -144,6 +144,60 @@ body {
     align-self: center;
     width: 300px;
   }
+
+  &__message {
+    margin: 5px 0;
+    padding: 0 5px;
+    color: #5e5e5e;
+  }
+
+  &__user {
+    font-size: 14px;
+  }
+  &__text {
+    padding: 10px;
+    margin: 8px 0;
+    border-top: 1px solid #9f9f9f;
+    border-bottom: 1px solid #9f9f9f;
+    line-height: 22px;
+    word-break: break-all;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__date {
+    font-size: 12px;
+    margin-left: 30px;
+  }
+  & a {
+    color: #9f9f9f;
+  }
+
+  &_button {
+    padding: 3px 10px;
+    font-size: 14px;
+    margin: 0 5px;
+    border: 1px solid #9f9f9f;
+    &:hover {
+      color: #ffffff;
+      background: #999797;
+    }
+  }
+  &__form_buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__clearform {
+    margin-left: 20px;
+    font-size: 18px;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
 }
 
 .banner {
@@ -834,7 +888,7 @@ body {
 
     &-part {
       width: 50px;
-      margin:0 3px;
+      margin: 0 3px;
       height: 100%;
       background: rgba(42, 42, 42, 0.15);
 
