@@ -1,12 +1,12 @@
 <?php
 
-    require "connect.php";
+require "connect.php";
     $action=(string)htmlspecialchars(strip_tags($_GET['action']));
-    $id=(string)htmlspecialchars(strip_tags($_GET['id']));
+    $id=(int)htmlspecialchars(strip_tags($_GET['id']));
     $name=(string)htmlspecialchars(strip_tags($_POST['userName']));
     $email=(string)htmlspecialchars(strip_tags($_POST['email']));
     $message=(string)htmlspecialchars(strip_tags($_POST['message']));
-    $idPost=(string)htmlspecialchars(strip_tags($_POST['id']));
+    $idPost=(int)htmlspecialchars(strip_tags($_POST['id']));
     if($action=="delete"&&$id){
         $query="DELETE FROM feedbacks WHERE id=$id";
         mysqli_query($connection, $query);

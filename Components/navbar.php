@@ -6,6 +6,13 @@ $query = "SELECT collections.id as collection_id, collections.name as collection
     LEFT JOIN categories
     ON collections.id=categories.collection_id";
 $res = mysqli_query($connection, $query);
+
+$userId=1;
+$queryCartCount="SELECT SUM(quantity) as sumCart FROM cart where userId=$userId";
+$result = mysqli_query($connection, $queryCartCount);
+$cart=mysqli_fetch_assoc($result);
+$cartQuan=$cart['sumCart'];
+echo $cartQuan;
 ?>
 
 <nav class="navbar">
@@ -47,13 +54,13 @@ $res = mysqli_query($connection, $query);
             <a href="#" class="navbar__item item-hamburger" id="item-hamburger">
                 <img src="img/menu_hamb.svg" alt="Submenu icon">
             </a>
-            <a href="/" class="navbar__item item_login">
+            <a href="/signup.php" class="navbar__item item_login">
                 <img src="img/user.svg" alt="Login icon">
             </a>
-            <a href="/" class="navbar__item item__cart">
+            <a href="/cart.php" class="navbar__item item__cart">
                 <img src="img/cart.svg" alt="Submenu icon">
                 <div class="item__cart__count">
-                    2
+                    <?=$cartQuan?>
                 </div>
             </a>
         </div>

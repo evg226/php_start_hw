@@ -132,7 +132,7 @@ $products = mysqli_query($connection, $queryProducts);
                             </div>
                         </a>
                         <div class="featured__item_add">
-                            <a href="cart.html" class="featured__item_add-link">
+                            <a href="cartactions.php?action=add&productId=<?=$data['id']?>" class="featured__item_add-link">
                                 Add to Cart
                             </a>
                         </div>
