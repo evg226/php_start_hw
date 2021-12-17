@@ -1,5 +1,5 @@
 <?php
-require "connect.php";
+require "engine/connect.php";
 $id=(int)htmlspecialchars(strip_tags($_GET['productId']));
 $queryProduct = "SELECT * from products WHERE id=$id";
 $resultProduct = mysqli_query($connection, $queryProduct);
@@ -53,7 +53,7 @@ $nextImage=($currenImage==($countImage-1))?0:($currenImage+1);
 
             <div class="container">
 
-                <form action="#">
+                <form action="engine/cartactions.php" method="get">
                     <div class="product__description">
                         <div class="product__collection"><?=$collect['collection_name']?> collection <?=$collect['category_name']?></div>
                         <div class="product__3line">
@@ -87,12 +87,10 @@ $nextImage=($currenImage==($countImage-1))?0:($currenImage+1);
                                 <option value="l">L</option>
                                 <option value="xl">xl</option>
                             </select>
-                            <select name="quantity" id="quantity">
-                                <option value="">quantity</option>
-                                <option value="good">Good</option>
-                                <option value="Excelent">Excelent</option>
-                            </select>
+                            <input type="number" name="quantity" placeholder="quantity" id="quantity" value="1"/>
                         </div>
+                        <input hidden type="number" name="productId" value="<?=$product['id']?>">
+                        <input hidden type="text" name="action" value="add" />
                         <button type="submit" class="product__button">
                             <img src="img/cart-red.svg" alt="">
                             Add to Cart</button>
@@ -135,31 +133,7 @@ $nextImage=($currenImage==($countImage-1))?0:($currenImage+1);
                         </div>
                     </div>
 
-                    <div class="featured__item">
-                        <a href="product.php?productId=4" class="featured__item-link">
-                            <div class="featured__item-img">
-                                <img src="img/feature7.png" alt="">
-                            </div>
-                            <div class="featured__item-header">
-                                <h3 class="featured__item-heading">
-                                    ELLERY X M'O CAPSULE
-                                </h3>
-                                <div class="featured__item-desc">
-                                    Known for her sculptural takes on traditional tailoring, Australian arbiter of cool
-                                    Kym Ellery
-                                    teams up with Moda Operandi.
-                                </div>
-                                <div class="featured__item-price">
-                                    $52.00
-                                </div>
-                            </div>
-                        </a>
-                        <div class="featured__item_add">
-                            <a href="cart.html" class="featured__item_add-link">
-                                Add to Cart
-                            </a>
-                        </div>
-                    </div>
+
 
                     <div class="featured__item featured__item_product-disappear">
                         <a href="product.php?productId=6" class="featured__item-link">

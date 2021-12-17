@@ -27,5 +27,5 @@ require "connect.php";
         }
     }
 
-    header("location: feedback.php");
+    header("location: ../feedback.php");
 ?>

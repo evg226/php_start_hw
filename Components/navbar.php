@@ -1,5 +1,6 @@
 <?php
-require "connect.php";
+session_start();
+require "engine/connect.php";
 $query = "SELECT collections.id as collection_id, collections.name as collection_name,
     categories.id as category_id, categories.name as category_name
     FROM collections
@@ -7,12 +8,12 @@ $query = "SELECT collections.id as collection_id, collections.name as collection
     ON collections.id=categories.collection_id";
 $res = mysqli_query($connection, $query);
 
-$userId=1;
+$userId=$_SESSION['userId'];
 $queryCartCount="SELECT SUM(quantity) as sumCart FROM cart where userId=$userId";
 $result = mysqli_query($connection, $queryCartCount);
 $cart=mysqli_fetch_assoc($result);
 $cartQuan=$cart['sumCart'];
-echo $cartQuan;
+//echo $cartQuan;
 ?>
 
 <nav class="navbar">

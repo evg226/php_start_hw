@@ -18,7 +18,7 @@ $feedtext=$_GET['feedtext'];
         <div class="feedback__container">
             <h2 class="signup__desc signup__desc_header">Feedback list</h2>
             <?php
-            require "connect.php";
+            require "engine/connect.php";
             $query = "Select * FROM feedbacks";
             $feedbacks = mysqli_query($connection, $query);
             while ($data=mysqli_fetch_assoc($feedbacks)):?>
@@ -27,14 +27,14 @@ $feedtext=$_GET['feedtext'];
                     <div class='feedback__text'><?=$data['feedtext']?></div>
                     <div class="feedback__buttons">   
                         <a class="feedback_button" href="?action=update&id=<?=$data['id']?>&name=<?=$data['name']?>&email=<?=$data['email']?>&feedtext=<?=$data['feedtext']?>#updform" class='feedback__delete'>update</a>
-                        <a class="feedback_button" href="dofeedbackaction.php?action=delete&id=<?=$data['id']?>" class='feedback__delete'>delete</a>
+                        <a class="feedback_button" href="engine/dofeedbackaction.php?action=delete&id=<?=$data['id']?>" class='feedback__delete'>delete</a>
                         <div class='feedback__date'><?=$data['feeddate']?></div>
                     </div>
                 </div>
             <?php endwhile; ?>
         </div>
 
-        <form id="updform" class="feedback__container" action="dofeedbackaction.php" method="post">
+        <form id="updform" class="feedback__container" action="engine/dofeedbackaction.php" method="post">
             <h2 class="signup__desc signup__desc_header">You can send your feedback here</h2>
                 <input hidden type="text" name="id" placeholder="Your Name" value="<?=$_GET['id']?>">
                 <div class="signup__header">Your name</div>

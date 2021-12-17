@@ -1,9 +1,8 @@
-<?php
-require "connect.php";
-$queryProducts = "SELECT * from products";
-$products = mysqli_query($connection, $queryProducts);
-?>
 
+<?php
+require "engine/connect.php";
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -112,6 +111,8 @@ $products = mysqli_query($connection, $queryProducts);
             <div class="featured__container container">
                 <article class="featured__box">
                         <?php
+                        $queryProducts = "SELECT * from products";
+                        $products = mysqli_query($connection, $queryProducts);
                             while($data = mysqli_fetch_assoc($products)):
                         ?>
                     <div class="featured__item">
@@ -132,7 +133,7 @@ $products = mysqli_query($connection, $queryProducts);
                             </div>
                         </a>
                         <div class="featured__item_add">
-                            <a href="cartactions.php?action=add&productId=<?=$data['id']?>" class="featured__item_add-link">
+                            <a href="engine/cartactions.php?action=add&productId=<?=$data['id']?>" class="featured__item_add-link">
                                 Add to Cart
                             </a>
                         </div>

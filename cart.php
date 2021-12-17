@@ -1,6 +1,9 @@
 <?php
-require "connect.php";
-$userId=1;
+session_start();
+require "engine/connect.php";
+if (!$_SESSION['userId']) {
+    header("location: signup.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,17 +21,21 @@ $userId=1;
             <div class="container cartbox__container">
                 <div class="cartbox__left">
                     <?php
+                    $userId=$_SESSION['userId'];
                     $query="SELECT *,cart.id as cartId from cart
                                 INNER JOIN products
                                 ON products.id=cart.productId
                             WHERE cart.userId=$userId";
+
                     $cartResult=mysqli_query($connection, $query);
+
+                    if (mysqli_num_rows($cartResult)==0) echo "<div class='cartbox__item'>Cart is empty</div>";
                     while($data=mysqli_fetch_assoc($cartResult)):?>
-                    <div class="cartbox__item">
+                        <div class="cartbox__item">
                         <div  class="cartbox__item-picture">
                             <img height="260px" src="img/<?=$data['image']?>" alt="">
                         </div>
-                        <form class="cartbox__item-desc" action="cartactions.php" method="get">
+                        <form class="cartbox__item-desc" action="engine/cartactions.php" method="get">
 <!--                            <input hidden type="text" name="action" value="update">-->
                             <input hidden type="text" name="id" value="<?=$data['cartId']?>">
                             <div class="cartbox__item-header">
@@ -56,7 +63,6 @@ $userId=1;
                         </form>
                     </div>
                     <?php endwhile; ?>
-
                     <div class="cartbox__action">
                         <a href="#" class="cartbox__button">Clear Shopping Cart</a>
                         <a href="catalog.php" class="cartbox__button">Continue Shopping</a>
